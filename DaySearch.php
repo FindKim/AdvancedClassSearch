@@ -1,4 +1,5 @@
 <html>
+<!--DaySearch.php-->
 <head>
 <link rel="icon" type="image/png" href="http://dsg1.crc.nd.edu/cse30246f14/ngo/NDicon.png">
 <link rel="stylesheet" href="Tables.css">
@@ -11,16 +12,16 @@
 
 <?php
 include 'Functions.php';
+
 // Connecting, selecting database
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
 
-// Get username if there is a session; username == '' if no session
+// Print user courses if logged in
 session_start();
 $username = $_SESSION['username'];
-$loggedin = 0;
+$loggined = 0;
 if ($username != '') {
 $loggedin = 1;
-}
 
 // Back button
 if ($loggedin == 1) {
@@ -33,69 +34,38 @@ onClick="window.location.href='http://dsg1.crc.nd.edu/cse30246f14/ngo/AdvancedCl
 <?php
 }
 
-// Printing your courses if logged in
-if ($loggedin == 1) {
+
+echo '<br>';
+echo PHP_EOL;
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes, EnrolledIn
 WHERE studentuser = "$username"
 AND classCRN = CRN order by CourseNumber
 END;
+$result = $db->query($query);
+print_user_results($result);
+$result->closeCursor();
+} // END OF PRINTING USER COURSES
+
+
+
+// Query for search by subject
+$day = $_GET['day'];
+//echo $day;
+$query = <<<END
+SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
+FROM classes
+WHERE ClassTime LIKE "$day - %" order by ClassTime
+END;
+
+
 
 $result = $db->query($query);
 
 // Printing results in HTML
-print_user_results($result);
-// Free resultset
-$result->closeCursor();
-}
-
-echo '<br>';
-
-// Print out professor
-$teacher =$_GET['teacher'];
-$teacher = str_replace(';', '', $teacher);
-
-// Parse professor for different styles of input
-$first_name = '';
-$last_name = '';
-if (strpos($teacher, ', ') !== false) {
-    $teacher_name = explode(', ', $teacher);
-    $first_name = trim($teacher_name[1]);
-    $last_name = trim($teacher_name[0]);
-} else if (strpos($teacher, ' ') !== false) {
-    $teacher_name = explode(' ', $teacher);
-    $first_name = trim($teacher_name[0]);
-    $last_name = trim($teacher_name[1]);
-} else {
-    $first_name = trim($teacher);
-}
-
-// Performing SQL query
-if ($first_name !== '' and $last_name !== '') {
-$query = <<<END
-SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$first_name%" and Instructor LIKE "%$last_name%" order by CourseNumber
-END;
-} else if ($first_name !== '') {
-$query = <<<END
-SELECT  CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$first_name%" order by CourseNumber
-END;
-} else if ($last_name !== '') {
-$query = <<<END
-SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$last_name%" order by CourseNumber
-END;
-} else {
-echo "A parsing issue has occured.", "<br>";
-}
-
-$result = $db->query($query);
-print_result($result, $teacher);
+echo "<br>";
+print_result($result, $day);
 
 // Free resultset
 $result->closeCursor();
@@ -107,6 +77,9 @@ $db = null;
 </body>
 </html>
 
+
+
+<!-- ADD/REMOVE CLASS -->
 <?php
 // Add class for user
 // check if the form has been submitted
@@ -118,14 +91,14 @@ $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
         $count = $result->rowCount();
         if ($count == 0) {
                 $sql = "INSERT INTO EnrolledIn (`studentuser`, `classCRN`) VALUES ('$username', '$_POST[Add]')";
-                $result = $db->query($sql);
+		$result = $db->query($sql);
         }
    }
 // once saved, redirect back to view page
 $result->closeCursor();
 
 // Closing connection
-mysql_close($db);
+$db = null;
 
 // Unset post
 unset($_POST['Add']);
@@ -138,6 +111,7 @@ unset($_POST['Add']);
 // check if the form has been submitted
 else if (isset($_POST['Remove'])) {
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
+
    if ($username !== '' || $_POST['CRN'] !== '') {
         $sql = "DELETE FROM EnrolledIn WHERE studentuser='$username' and classCRN='$_POST[Remove]'";
         $result = $db->query($sql);
@@ -146,8 +120,7 @@ $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
 $result->closeCursor();
 
 // Closing connection
-mysql_close($db);
-
+$db = null;
 // Unset post
 unset($_POST['Remove']);
 
@@ -155,7 +128,6 @@ unset($_POST['Remove']);
 ?>
 <meta http-equiv="refresh" content="0">
 <?php
+
 }
-
 ?>
-

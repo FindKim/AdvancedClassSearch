@@ -1,0 +1,16 @@
+div {
+	width: 200px;
+	height: 200px;
+	display: block;
+	position: relative;
+}
+
+div::after {
+	background: url(http://tour.nd.edu/assets/130202/original/dome_full.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	opacity: 0.5;
+	z-index: -1;
+}

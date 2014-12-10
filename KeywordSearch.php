@@ -1,5 +1,5 @@
 <html>
-<head>
+<!-- KEYWORDSEARCH.PHP -->
 <link rel="icon" type="image/png" href="http://dsg1.crc.nd.edu/cse30246f14/ngo/NDicon.png">
 <link rel="stylesheet" href="Tables.css">
 <title>Advanced Class Search</title>
@@ -9,12 +9,17 @@
 <h1>University of Notre Dame<br>Class Search</h1>
 <div class="footer">Created by Jake Gavin, Kim Ngo, and James Bowyer -- CSE Class of 2016</div>
 
+
 <?php
+// Includes print result functions
 include 'Functions.php';
-// Connecting, selecting database
+
+
+// Connecting, selecting 
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
 
-// Get username if there is a session; username == '' if no session
+
+// Gdatabaseet username if there is a session; username == '' if no session
 session_start();
 $username = $_SESSION['username'];
 $loggedin = 0;
@@ -23,79 +28,43 @@ $loggedin = 1;
 }
 
 // Back button
-if ($loggedin == 1) {
 ?>
 <br>
-<form action="AdvancedClassSearchLogin.php" method="get">
-<form><input type="button" value="Back" class="rounded"
-onClick="window.location.href='http://dsg1.crc.nd.edu/cse30246f14/ngo/AdvancedClassSearchLogin.php'"></form>
-</form>
-<?php
-}
+<button class="rounded" onclick="window.location.href='http://dsg1.crc.nd.edu/cse30246f14/ngo/AdvancedClassSearchLogin.php'">Back</button>
 
+<?php
 // Printing your courses if logged in
 if ($loggedin == 1) {
+echo '<br>';
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes, EnrolledIn
 WHERE studentuser = "$username"
 AND classCRN = CRN order by CourseNumber
 END;
+$result = $db->query($query); 
 
-$result = $db->query($query);
-
-// Printing results in HTML
 print_user_results($result);
+
 // Free resultset
 $result->closeCursor();
 }
 
-echo '<br>';
 
-// Print out professor
-$teacher =$_GET['teacher'];
-$teacher = str_replace(';', '', $teacher);
-
-// Parse professor for different styles of input
-$first_name = '';
-$last_name = '';
-if (strpos($teacher, ', ') !== false) {
-    $teacher_name = explode(', ', $teacher);
-    $first_name = trim($teacher_name[1]);
-    $last_name = trim($teacher_name[0]);
-} else if (strpos($teacher, ' ') !== false) {
-    $teacher_name = explode(' ', $teacher);
-    $first_name = trim($teacher_name[0]);
-    $last_name = trim($teacher_name[1]);
-} else {
-    $first_name = trim($teacher);
-}
+// Print out keyword
+$keyword = $_GET['keyword'];
+$keyword = str_replace(';', '', $keyword);
+echo "<br>";
 
 // Performing SQL query
-if ($first_name !== '' and $last_name !== '') {
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes
-WHERE Instructor LIKE "%$first_name%" and Instructor LIKE "%$last_name%" order by CourseNumber
+WHERE CourseSec LIKE "%$keyword%" or Title LIKE "%$keyword%" order by CourseNumber
 END;
-} else if ($first_name !== '') {
-$query = <<<END
-SELECT  CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$first_name%" order by CourseNumber
-END;
-} else if ($last_name !== '') {
-$query = <<<END
-SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$last_name%" order by CourseNumber
-END;
-} else {
-echo "A parsing issue has occured.", "<br>";
-}
 
 $result = $db->query($query);
-print_result($result, $teacher);
+print_result($result, $keyword);
 
 // Free resultset
 $result->closeCursor();
@@ -113,19 +82,19 @@ $db = null;
 if (isset($_POST['Add'])) {
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
    if ($username !== '' || $_POST['CRN'] !== '') {
-        $sql = "SELECT * FROM EnrolledIn WHERE studentuser = '$username' and classCRN = '$_POST[Add]'";
-        $result = $db->query($sql);
-        $count = $result->rowCount();
-        if ($count == 0) {
-                $sql = "INSERT INTO EnrolledIn (`studentuser`, `classCRN`) VALUES ('$username', '$_POST[Add]')";
-                $result = $db->query($sql);
-        }
+	$sql = "SELECT * FROM EnrolledIn WHERE studentuser = '$username' and classCRN = '$_POST[Add]'";
+	$result = $db->query($sql);
+	$count = $result->rowCount();
+	if ($count < 1) {
+        	$sql = "INSERT INTO EnrolledIn (`studentuser`, `classCRN`) VALUES ('$username', '$_POST[Add]')";
+		$result = $db->query($sql);
+	}
    }
 // once saved, redirect back to view page
 $result->closeCursor();
 
 // Closing connection
-mysql_close($db);
+$db = null;
 
 // Unset post
 unset($_POST['Add']);
@@ -140,13 +109,14 @@ else if (isset($_POST['Remove'])) {
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
    if ($username !== '' || $_POST['CRN'] !== '') {
         $sql = "DELETE FROM EnrolledIn WHERE studentuser='$username' and classCRN='$_POST[Remove]'";
+        echo $sql;
         $result = $db->query($sql);
    }
 // once saved, redirect back to view page
 $result->closeCursor();
 
 // Closing connection
-mysql_close($db);
+$db = null;
 
 // Unset post
 unset($_POST['Remove']);

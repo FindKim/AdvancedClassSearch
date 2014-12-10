@@ -1,48 +1,27 @@
 html {
-    font-family: Arial !important;
-    background: url('LoginBackground.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-	opacity: 0.8;
-	z-index: -1;
-}
-body { 
-    text-align: center;
-    color: black;
-    display: block;
-    position: relative;
-	background-color: rgba(255, 255, 255, 0.55555);
-	position: fixed;
-	top: 25%;
-	left: 25%;
-	width: 50%;
-	max-height: 100%;
-	overflow: auto;
+	font-family: Arial !important;
 }
 
 h1 {
 	text-align: center;
 	margin: 0 auto;
-	position: fixed;
+	position: relative;
 	float: center;
 	padding: 5px;
 	right: 10px;
 	left: 10px;
 	top: 10px;
-    color: black;
-    background-color: rgba(255, 255, 255, 0.7);
-	font: "Verdanda";
+	color: black;
+	background-color: rgba(255, 255, 255, 0.7);
 	font-size: 30px;	
 }
 
 button.rounded {
-        border: 1px solid #ccc;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-        border-radius: 2px;
-        padding: 5px;
+	border: 1px solid #ccc;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 2px;
+	padding: 5px;
 }
 
 input.rounded {
@@ -54,7 +33,6 @@ input.rounded {
 }
 
 input.button {
-	font: "Verdanda";
 	display:inline-block;
 	*display:inline;
 	zoom:1;
@@ -97,6 +75,25 @@ input.button {
 	color:#fff	
 }
 
+.styled-select select {
+	background: transparent;
+	width: 268px;
+	padding: 5px;
+	font-size: 16px;
+	line-height: 1;
+	border: 0;
+	border-radius: 2px;
+	height: 34px;
+	-webkit-appearance: none;
+}
+
+.styled-select {
+	width: 200px;
+	height: 34px;
+	overflow: scroll;
+	border: 1px solid #ccc;
+}
+
 .footer {
 	text-align: left;
 	margin: 0 auto;
@@ -110,4 +107,84 @@ input.button {
 	font: "Verdanda";
 	font-size: 10px;
 }
- 	
+
+/*!
+Pure v0.5.0
+Copyright 2014 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+https://github.com/yui/pure/blob/master/LICENSE.md
+*/
+.pure-table {
+    /* Remove spacing between table cells (from Normalize.css) */
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+}
+
+.pure-table caption {
+    color: #000;
+    font-weight: bold;
+    padding: 1em 0;
+    text-align: left;
+}
+
+.pure-table td,
+.pure-table th {
+    border-left: 1px solid #cbcbcb;/*  inner column border */
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible; /*to make ths where the title is really long work*/
+    padding: 0.5em 1em; /* cell padding */
+}
+.pure-table td:first-child,
+.pure-table th:first-child {
+    border-left-width: 0;
+}
+
+.pure-table thead {
+    background: #e0e0e0;
+    color: #000;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/*
+striping:
+   even - #fff (white)
+   odd  - #f2f2f2 (light gray)
+*/
+.pure-table td {
+    background-color: transparent;
+}
+.pure-table-odd td {
+    background-color: #f2f2f2;
+}
+
+/* nth-child selector for modern browsers */
+.pure-table-striped tr:nth-child(2n-1) td {
+    background-color: #f2f2f2;
+}
+
+/* BORDERED TABLES */
+.pure-table-bordered td {
+    border-bottom: 1px solid #cbcbcb;
+}
+.pure-table-bordered tbody > tr:last-child td,
+.pure-table-horizontal tbody > tr:last-child td {
+    border-bottom-width: 0;
+}
+
+
+/* HORIZONTAL BORDERED TABLES */
+
+.pure-table-horizontal td,
+.pure-table-horizontal th {
+    border-width: 0 0 1px 0;
+    border-bottom: 1px solid #cbcbcb;
+}
+.pure-table-horizontal tbody > tr:last-child td {
+    border-bottom-width: 0;
+}
+	

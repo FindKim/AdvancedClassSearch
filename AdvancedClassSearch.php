@@ -5,9 +5,19 @@
 <body>
 
 <p> Advanced Class Search: Created by Jake Gavin, Kim Ngo, and James Bowyer </p>
+
+<!--Login-->
+<form><input type="button" value="Login"
+onClick="window.location.href='http://dsg1.crc.nd.edu/cse30246f14/ngo/Login.php'">
+</form>
+
+<br><br>
+
+<!--Search by Professor functionaility-->
 <form action="TeacherSearch.php" method="get">
 Search by professor: <input type="textbox" name="teacher">
 </form>
+
 <?php
 // Connecting, selecting database
 $link = mysql_connect('localhost', 'jgavin', 'jgav23')
@@ -15,78 +25,16 @@ $link = mysql_connect('localhost', 'jgavin', 'jgav23')
 
 mysql_select_db('jgavin') or die('Could not select database');
 
-$username = mysql_real_escape_string($_GET['username']);
-$password = mysql_real_escape_string($_GET['password']);
-
-session_start();
-$_SESSION['username'] = $username;
-$_SESSION['password'] = $password;
-
-echo 'Username: ';
-echo $username . PHP_EOL;
-echo PHP_EOL;
-echo 'Your Courses:';
-echo PHP_EOL;
-$query = <<<END
-SELECT *
-FROM classes, EnrolledIn
-WHERE studentuser = "$username"
-AND classCRN = CRN 
-END;
-$result = mysql_query($query) or die('Query failed: ' . mysql_error());
-
-// Printing results in HTML
-echo "<table>\n";
-echo "<table border=1>";
-echo "\t<tr>\n";
-echo "\t\t<td>Remove</td>\n";
-echo "\t\t<td>Course-Section</td>\n";
-echo "\t\t<td>Title</td>\n";
-echo "\t\t<td>Credits</td>\n";
-echo "\t\t<td>St</td>\n";
-echo "\t\t<td>Max</td>\n";
-echo "\t\t<td>Open</td>\n";
-echo "\t\t<td>Xlst</td>\n";
-echo "\t\t<td>CRN</td>\n";
-echo "\t\t<td>Instructor</td>\n";
-echo "\t\t<td>Class Time</td>\n";
-echo "\t\t<td>Begin</td>\n";
-echo "\t\t<td>End</td>\n";
-echo "\t</tr>\n";
-while ($tuple = mysql_fetch_array($result, MYSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    echo "\t\t<td>"
-    ?>
-
-	<form name="Remove" action="" method="post">
-        <button type="submit" name="Remove" value="<?php echo $tuple['CRN']; ?>"/>x</button>
-        </form>
-
-    <?php
-    echo "</td>\n";
-    foreach ($tuple as $col_value) {
-	echo "\t\t<td>$col_value</td>\n";
-    }
-    echo "\t</tr>\n";
-}
-echo "</table>\n";
-
-// Free resultset
-mysql_free_result($result);
-
-
 echo "All courses:";
 
-
 // Performing SQL query
-$query = 'SELECT * FROM classes';
+$query = 'SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End FROM classes';
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
 
 // Printing results in HTML
 echo "<table>\n";
 echo "<table border=1>";
 echo "\t<tr>\n";
-echo "\t\t<td>Add</td>\n";
 echo "\t\t<td>Course-Section</td>\n";
 echo "\t\t<td>Title</td>\n";
 echo "\t\t<td>Credits</td>\n";
@@ -103,13 +51,6 @@ echo "\t</tr>\n";
 
 while ($tuple = mysql_fetch_array($result, MYSQL_ASSOC)) {
     echo "\t<tr>\n";
-    echo "\t\t<td>"
-    ?>
-        <form name="Add" action="" method="post">
-	<button type="submit" name="Add" value="<?php echo $tuple['CRN']; ?>"/>+</button>
-        </form>
-    <?php
-    echo "</td>\n";
     foreach ($tuple as $col_value) {
         echo "\t\t<td>$col_value</td>\n";
     }
