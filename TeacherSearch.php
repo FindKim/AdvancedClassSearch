@@ -38,12 +38,12 @@ if ($loggedin == 1) {
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes, EnrolledIn
-WHERE studentuser = "$username"
+WHERE studentuser = ?
 AND classCRN = CRN order by CourseNumber
 END;
 
-$result = $db->query($query);
-
+$result = $db->prepare($query);
+$result->execute(array($username));
 // Printing results in HTML
 print_user_results($result);
 // Free resultset
@@ -76,29 +76,47 @@ if ($first_name !== '' and $last_name !== '') {
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes
-WHERE Instructor LIKE "%$first_name%" and Instructor LIKE "%$last_name%" order by CourseNumber
+WHERE Instructor LIKE ? and Instructor LIKE ? order by CourseNumber
 END;
-} else if ($first_name !== '') {
-$query = <<<END
-SELECT  CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$first_name%" order by CourseNumber
-END;
-} else if ($last_name !== '') {
-$query = <<<END
-SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
-FROM classes
-WHERE Instructor LIKE "%$last_name%" order by CourseNumber
-END;
-} else {
-echo "A parsing issue has occured.", "<br>";
-}
 
-$result = $db->query($query);
+$result = $db->prepare($query);
+$result->execute(array('%'.$first_name.'%', '%'.$last_name.'%'));
 print_result($result, $teacher);
 
 // Free resultset
 $result->closeCursor();
+
+} else if ($first_name !== '') {
+$query = <<<END
+SELECT  CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
+FROM classes
+WHERE Instructor LIKE ? order by CourseNumber
+END;
+
+$result = $db->prepare($query);
+$result->execute(array('%'.$first_name.'%'));
+print_result($result, $teacher);
+
+// Free resultset
+$result->closeCursor();
+
+} else if ($last_name !== '') {
+$query = <<<END
+SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
+FROM classes
+WHERE Instructor LIKE ? order by CourseNumber
+END;
+
+$result = $db->prepare($query);
+$result->execute(array('%'.$last_name.'%'));
+print_result($result, $teacher);
+
+// Free resultset
+$result->closeCursor();
+
+} else {
+echo "A parsing issue has occured.", "<br>";
+}
 
 // Closing connection
 $db = null;

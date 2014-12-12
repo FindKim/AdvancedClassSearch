@@ -8,6 +8,8 @@
 
 <?php
 session_start();
+session_destroy();
+/*
 $username = array_key_exists('username', $_POST) ? $_POST['username'] : null;
 # Check if logged in
 if ($username != '') {
@@ -18,6 +20,7 @@ if ($username != '') {
 } else {
 echo $username;
 }
+*/
 ?>
 
 <body>

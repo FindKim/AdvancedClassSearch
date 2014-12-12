@@ -14,19 +14,24 @@
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
 //echo "Connection established";
 
+session_start();
+session_destroy();
+
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$query = "SELECT * FROM student WHERE username = '$username'";
-$result = $db->query($query);
+$query = "SELECT * FROM student WHERE username = ?";
+$result = $db->prepare($query);
+$result->execute(array($username));
 if ($count = $result->rowCount() != 0) {
 	?><br><button class="rounded" onclick="history.go(-1);">Back</button> <?php
 	echo "<br><br>This username has already been taken.<br><br>";
 } else {
 
 if (ctype_alnum($username) and strlen($username) > 3 and strlen($password) > 3) {
-	$query = "INSERT INTO student (`username`, `password`) VALUES ('$username', '$password')";
-	$result = $db->query($query);
+	$query = "INSERT INTO student (`username`, `password`) VALUES (?, ?)";
+	$result = $db->prepare($query);
+	$result->execute(array($username, $password));
 } else {
 $result = 0;
 }
@@ -40,7 +45,8 @@ echo("<br>Redirecting to login in 5 seconds...<br><br>");
 <?php
 } else {
 ?>
-<button onclick="history.go(-1);">Back</button>
+<br>
+<button class="rounded" onclick="history.go(-1);">Back</button>
 <br>
 <?php
 echo("<br><strong>Issue creating username</strong><br><br><strong>Username must contain:</strong><br>Only alphanumeric characters<br>Minimum of 4 characters<br><br><strong>Password must contain:</strong><br>Minimum length of 4 characters<br><br>");

@@ -39,11 +39,12 @@ echo '<br>';
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes, EnrolledIn
-WHERE studentuser = "$username"
+WHERE studentuser = ?
 AND classCRN = CRN order by CourseNumber
 END;
-$result = $db->query($query); 
-
+//$result = $db->query($query); 
+$result = $db->prepare($query);
+$result->execute(array($username));
 print_user_results($result);
 
 // Free resultset
@@ -60,10 +61,12 @@ echo "<br>";
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes
-WHERE CourseSec LIKE "%$keyword%" or Title LIKE "%$keyword%" order by CourseNumber
+WHERE CourseSec LIKE ? or Title LIKE ? order by CourseNumber
 END;
 
-$result = $db->query($query);
+$result = $db->prepare($query);
+$result->execute(array('%'.$keyword.'%', '%'.$keyword.'%'));
+
 print_result($result, $keyword);
 
 // Free resultset

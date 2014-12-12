@@ -32,8 +32,8 @@ with open("query.txt") as f:
 		newcourse.title = words[0]
 		if(numDays == 1):
 			newcourse.days.append(words[2])				
-			newcourse.starttimes = float(words[5])
-			newcourse.endtime = words[6]
+			newcourse.starttime = float(words[5])
+			newcourse.endtime = float(words[6])
                 if(numDays == 2):
                         newcourse.days.append(words[2])
 			newcourse.days.append(words[3])
@@ -49,14 +49,12 @@ with open("query.txt") as f:
 		newcourse.sectionnumber = words[9]
 		newcourse.sectionnumber = newcourse.sectionnumber.rstrip()
 		courses.append(newcourse)	
-
 	titles = []
 	uniqueclasses = 0
 	titlefound = 0
 	print titles
 	for xcourse in courses:
 		titlefound = 0
-
 		for temp in titles:
 
 			if(xcourse.title == temp):
@@ -102,8 +100,7 @@ with open("query.txt") as f:
 										works = 0
 										break
 									else:
-										
-										print "day 1", day1
+										print "made it to else"
 
 							if(works == 0):
 								break

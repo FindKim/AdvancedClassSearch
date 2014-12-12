@@ -1,7 +1,15 @@
 <html>
+<head>
+<link rel="icon" type="image/png" href="http://dsg1.crc.nd.edu/cse30246f14/ngo/NDicon.png">
+<link rel="stylesheet" href="Tables.css">
+<title>Advanced Class Search</title>
+</head>
+<body>
+<h1>University of Notre Dame<br>Class Search</h1>
+<div class="footer">Created by Jake Gavin, Kim Ngo, and James Bowyer -- CSE Class of 2016</div>
+
 <?php
 //work in progress... enter at your own risk
-echo("whos da penguins whos da penguin - i am");
 include 'Functions.php';
 //FLUSH QUERY CACHE;
 
@@ -21,7 +29,16 @@ $dbname2 = "classes";
 $sql="SELECT CourseSec FROM $dbname as a, $dbname2 as b WHERE a.studentuser='$myusername' and a.classCRN=b.CRN";
 $result = $db->query($sql);
 $count=$result->rowCount();
-//echo ("$count <br>");
+
+// Check if user is enrolled in any classes, if not do make make a schedule
+if ($count <= 0) {
+?>
+<br>
+<button class="rounded" onclick="window.location.href='http://dsg1.crc.nd.edu/cse30246f14/ngo/AdvancedClassSearchLogin.php'">Back</button>
+<?php
+echo "<br><br>No classes to create a schedule<br>";
+
+} else {
 $i = 0;
 $sections=array();
 $courses=array(); //array to hold courses w/o section
@@ -97,10 +114,14 @@ $command = escapeshellcmd('./scheduler.py');
 $output = exec($command);
 //echo $output;
 //$result = exec('pyton scheduler.py');
+
 ?>
 <head>
 
   <meta http-equiv="refresh" content="0; url=Schedule.html" />
 
-</head>
+<?php
+ } 
+?>
+
 </html>

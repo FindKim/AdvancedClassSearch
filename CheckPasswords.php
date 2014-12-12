@@ -38,28 +38,24 @@ echo "<br>Invalid password change:<br>Cannot contain ;";
 } else {
 
 //selecting username and password
-$dbname2 = "student";
-$sql="SELECT * FROM $dbname2 WHERE username='$myusername' and password='$mypassword'";
-$result=$db->query($sql);
+$sql="SELECT * FROM student WHERE username = ? and password= ?";
+$result=$db->prepare($sql);
+$result->execute(array($myusername, $mypassword));
 //count number of returned rows will only be one if
 // username and password are same
 $count=$result->rowCount();
 $result->closeCursor();
 if($count==1){
 	if($mypassword1==$mypassword2){
-		$sql2="UPDATE $dbname2 SET username='$myusername', password='$mypassword1' WHERE username='$myusername' and password='$mypassword'";
-		$result2=$db->query($sql2);
-	}
-	if($result2){
+		$sql2="UPDATE student SET username= ?, password= ? WHERE username=? and password=?";
+		$result2=$db->prepare($sql2);
+		$result2->execute(array($myusername, $mypassword1, $myusername, $mypassword));
+		$result2->closeCursor();
 		echo("<br>Password Changed!");
-	}
-	else{
+	} else {
 		echo("<br>Passwords didn't match");
 	}
-	$result2->closeCursor();
-}
-else
-{
+} else {
 	echo("<br>Incorrect Username or Password");
 }
 

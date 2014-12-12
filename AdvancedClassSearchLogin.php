@@ -45,8 +45,11 @@ if ($username == '') {
 	//echo "IN SESSION, $username";
 }
 
-$sql="SELECT * FROM student WHERE username='$username' and password='$password'";
-$result = $db->query($sql);
+//$sql="SELECT * FROM student WHERE username='$username' and password='$password'";
+//$result = $db->query($sql);
+//$sql = 'SELECT * FROM student WHERE username=:username and password=:password';
+$result = $db->prepare('SELECT * FROM student WHERE username = ? and password = ?');
+$result->execute(array($username, $password));
 //count number of returned rows will only be one if
 // username and password are same
 $count = $result->rowCount();
@@ -300,11 +303,12 @@ echo PHP_EOL;
 $query = <<<END
 SELECT CourseSec, Title, Credits, ST, Max, Open, Xlst, CRN, Instructor, ClassTime, Begin, End
 FROM classes, EnrolledIn
-WHERE studentuser = "$username"
+WHERE studentuser = ?
 AND classCRN = CRN order by CourseNumber 
 END;
 
-$result = $db->query($query);
+$result = $db->prepare($query);
+$result->execute(array($username));
 print_user_results($result);
 
 // Free resultset
@@ -322,7 +326,7 @@ echo "<br>";
 <br>
 
 <?php
-
+/*
 if (isset($_POST['All'])) {
 // Performing SQL query
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
@@ -337,18 +341,25 @@ $db = null;
 <?php
 unset($_POST['All']);
 }
+*/
 
 // Add class for user
 // check if the form has been submitted
 if (isset($_POST['Add'])) {
 $db = new PDO('mysql:host=localhost;dbname=jgavin', 'jgavin', 'jgav23');
    if ($username !== '' || $_POST['CRN'] !== '') {
-        $sql = "SELECT * FROM EnrolledIn WHERE studentuser = '$username' and classCRN = '$_POST[Add]'";
-        $result = $db->query($sql);
-        $count = $result->rowCount();
+//        $sql = "SELECT * FROM EnrolledIn WHERE studentuser = '$username' and classCRN = '$_POST[Add]'";
+//	$result = $db->query($sql);
+	$sql = "SELECT * FROM EnrolledIn WHERE studentuser = ? and classCRN = ?";
+        $result = $db->prepare($query);
+	$result->execute(array($username, $_POST[Add]));
+	$count = $result->rowCount();
         if ($count < 1) {
-                $sql = "INSERT INTO EnrolledIn (`studentuser`, `classCRN`) VALUES ('$username', '$_POST[Add]')";
-		$result = $db->query($sql);
+//                $sql = "INSERT INTO EnrolledIn (`studentuser`, `classCRN`) VALUES ('$username', '$_POST[Add]')";
+//		$result = $db->query($sql);
+		$sql = "INSERT INTO EnrolledIn (`studentuser`, `classCRN`) VALUES (?, ?)";
+                $result = $db->prepare($sql);
+		$result->execute(array($username, $_POST[Add]));
 	}
    }
 // once saved, redirect back to view page

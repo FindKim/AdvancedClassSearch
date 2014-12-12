@@ -1,19 +1,35 @@
-Poverty in Developing World; ECON; M; W; ; 8; 9.25; 2; 29171; 01
-Managerial Economics; FIN; T; R; ; 9.5; 10.75; 2; 24890; 07
-Managerial Economics; FIN; T; R; ; 11; 12.25; 2; 24890; 07
-Managerial Economics; FIN; T; R; ; 12.5; 13.75; 2; 24890; 07
-Managerial Economics; FIN; M; W; F; 9.41666666667; 10.25; 3; 24890; 07
-Managerial Economics; FIN; M; W; F; 10.5; 11.3333333333; 3; 24890; 07
-Managerial Economics; FIN; T; R; ; 15.5; 16.75; 2; 24890; 07
-Financial Statement Analysis; FIN; M; W; ; 12.5; 13.75; 2; 29266; 02
-Financial Statement Analysis; FIN; M; W; ; 14; 15.25; 2; 29266; 02
-Entitle Refm: Soc Security me; ECON; T; R; ; 12.5; 13.75; 2; 29172; 01
-JrRsrch:Foresight Busnss&Socty; BA; M; W; ; 9.5; 10.75; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; M; W; ; 11; 12.25; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; M; W; ; 14; 15.25; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; M; W; ; 12.5; 13.75; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; M; W; ; 15.5; 16.75; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; T; R; ; 9.5; 10.75; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; T; R; ; 11; 12.25; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; T; R; ; 14; 15.25; 2; 24105; 07
-JrRsrch:Foresight Busnss&Socty; BA; T; R; ; 15.5; 16.75; 2; 24105; 07
+Operating System Principles; CSE; T; R; ; 9.5; 10.75; 2; 20239; 01
+Operating System Principles; CSE; T; R; ; 9.5; 10.75; 2; 20239; 01
+Theory of Computing; CSE; T; R; ; 14; 15.25; 2; 20245; 01
+Theory of Computing; CSE; T; R; ; 14; 15.25; 2; 20245; 01
+Theory of Computing; CSE; T; R; ; 14; 15.25; 2; 20245; 01
+Programming Paradigms; CSE; M; W; F; 10.5; 11.3333333333; 3; 23161; 01
+Programming Paradigms; CSE; M; W; F; 10.5; 11.3333333333; 3; 23161; 01
+Programming Paradigms; CSE; M; W; F; 10.5; 11.3333333333; 3; 23161; 01
+General Physics I; PHYS; M; W; F; 8.33333333333; 9.16666666667; 3; 20886; 01
+General Physics I; PHYS; M; W; F; 10.5; 11.3333333333; 3; 20886; 01
+General Physics I; PHYS; M; W; F; 14; 14.8333333333; 3; 20886; 01
+Ethics of Emerging Weapon Tech; PHIL; T; R; ; 11; 12.25; 2; 28897; 01
+Ethics of Emerging Weapon Tech; PHIL; T; R; ; 14; 15.25; 2; 28897; 01
+General Physics I Laboratory; PHYS; R; ; ; 10; 11.9166666667; 1; 21368; 01
+General Physics I Laboratory; PHYS; R; ; ; 12.6666666667; 14.5833333333; 1; 21368; 01
+General Physics I Laboratory; PHYS; R; ; ; 14.8333333333; 16.75; 1; 21368; 01
+General Physics I Laboratory; PHYS; F; ; ; 13.9166666667; 15.8333333333; 1; 21368; 01
+General Physics I Laboratory; PHYS; F; ; ; 16.0833333333; 18; 1; 21368; 01
+General Physics I Tutorial; PHYS; T; ; ; 9.5; 10.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 9.5; 10.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 9.5; 10.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 11; 11.8333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 11; 11.8333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 11; 11.8333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 12.5; 13.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 12.5; 13.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 12.5; 13.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 14; 14.8333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 14; 14.8333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 14; 14.8333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 15.5; 16.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 15.5; 16.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 15.5; 16.3333333333; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 17.0833333333; 17.9166666667; 1; 20752; 04
+General Physics I Tutorial; PHYS; T; ; ; 17.0833333333; 17.9166666667; 1; 20752; 04
