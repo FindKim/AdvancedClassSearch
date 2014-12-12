@@ -5,6 +5,7 @@
 	font-family: arial, helvetica;
 }
 
+/*
 .wc-nav {
 	padding: 1em;
 	text-align: right;	
@@ -13,7 +14,7 @@
 .wc-nav button {
 	margin: 0 0.5em;	
 }
- 
+*/
 
 .wc-container table {
 	border-collapse: collapse;
@@ -58,7 +59,8 @@
 	overflow: auto;
 	overflow-x: hidden !important;
 	overflow-y: auto !important; 
-	position: relative;
+	/*position: relative;*/
+	position: fixed;
 	background-color: #fff;
 	width: 100%;
 }
@@ -137,14 +139,15 @@ table.wc-time-slots {
 	padding-right: 10px;	
 }
 
-.wc-header .wc-today  {
+/*.wc-header .wc-today  {
+.wc-header {
 	font-weight: bold;
 }
 
 .wc-time-slots .wc-today {
 	background-color: #ffffcc;	
 }
-
+*/
 
 .wc-cal-event {
 	background-color: #68a1e5;	

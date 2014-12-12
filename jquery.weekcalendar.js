@@ -29,7 +29,8 @@
          self._renderCalendar();
          self._loadCalEvents();
          self._resizeCalendar();
-         self._scrollToHour(self.options.date.getHours());
+         self._scrollToHour(9);
+	 //self._scrollToHour(self.options.date.getHours());
 
          $(window).unbind("resize.weekcalendar");
          $(window).bind("resize.weekcalendar", function() {
@@ -59,42 +60,47 @@
       /*
        * Go to this week
        */
+/*
       today : function() {
          this._clearCalendar();
          this._loadCalEvents(new Date());
       },
-
+*/
       /*
        * Go to the previous week relative to the currently displayed week
        */
+/*
       prevWeek : function() {
          //minus more than 1 day to be sure we're in previous week - account for daylight savings or other anomolies
          var newDate = new Date(this.element.data("startDate").getTime() - (MILLIS_IN_WEEK / 6));
          this._clearCalendar();
          this._loadCalEvents(newDate);
       },
-
+*/
       /*
        * Go to the next week relative to the currently displayed week
        */
+/*
       nextWeek : function() {
          //add 8 days to be sure of being in prev week - allows for daylight savings or other anomolies
          var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_WEEK + (MILLIS_IN_WEEK / 7));
          this._clearCalendar();
          this._loadCalEvents(newDate);
       },
-
+*/
       /*
        * Reload the calendar to whatever week the date passed in falls on.
        */
+/*
       gotoWeek : function(date) {
          this._clearCalendar();
          this._loadCalEvents(date);
       },
-
+*/
       /*
        * Remove an event based on it's id
        */
+/*
       removeEvent : function(eventId) {
 
          var self = this;
@@ -111,7 +117,7 @@
             self._adjustOverlappingEvents($(this));
          });
       },
-
+*/
       /*
        * Removes any events that have been added but not yet saved (have no id).
        * This is useful to call after adding a freshly saved new event.
@@ -135,10 +141,11 @@
        * it's rendering. If it's a new event that does not exist in the calendar
        * it will be added.
        */
+/*
       updateEvent : function (calEvent) {
          this._updateEventInCalendar(calEvent);
       },
-
+*/
       /*
        * Returns an array of timeslot start and end times based on
        * the configured grid of the calendar. Returns in both date and
@@ -260,6 +267,7 @@
       /*
        * check if a ui draggable or resizable is currently being dragged or resized
        */
+
       _isDraggingOrResizing : function ($target) {
          return $target.hasClass("ui-draggable-dragging") || $target.hasClass("ui-resizable-resizing");
       },
@@ -274,7 +282,7 @@
          var options = this.options;
 
          $calendarContainer = $("<div class=\"wc-container\">").appendTo(self.element);
-
+/*
          if (options.buttons) {
             calendarNavHtml = "<div class=\"wc-nav\">\
                     <button class=\"wc-today\">" + options.buttonText.today + "</button>\
@@ -300,7 +308,7 @@
             });
 
          }
-
+*/
          //render calendar header
          calendarHeaderHtml = "<table class=\"wc-header\"><tbody><tr><td class=\"wc-time-column-header\"></td>";
          for (var i = 1; i <= options.daysToShow; i++) {
@@ -500,7 +508,7 @@
 
             var dayName = options.useShortDayNames ? options.shortDays[currentDay.getDay()] : options.longDays[currentDay.getDay()];
 
-            $(this).html(dayName + "<br/>" + self._formatDate(currentDay, options.dateFormat));
+            $(this).html(dayName);/* + "<br/>" + self._formatDate(currentDay, options.dateFormat));*/
             if (self._isToday(currentDay)) {
                $(this).addClass("wc-today");
             } else {
@@ -851,6 +859,7 @@
        * Add draggable capabilities to an event
        */
       _addDraggableToCalEvent : function(calEvent, $calEvent) {
+/*
          var self = this;
          var options = this.options;
          var $weekDay = self._findWeekDayForEvent(calEvent, self.element.find(".wc-time-slots .wc-day-column-inner"));
@@ -865,7 +874,7 @@
                options.eventDrag(calEvent, $calEvent);
             }
          });
-
+*/
       },
 
       /*
@@ -1318,12 +1327,15 @@
          scrollToHourMillis : 500,
          allowCalEventOverlap : false,
          overlapEventsSeparate: false,
-         readonly: false,
+         /*readonly: false,*/
+	readonly: true,
          draggable : function(calEvent, element) {
-            return true;
+            /*return true;*/
+		return false;
          },
          resizable : function(calEvent, element) {
-            return true;
+            /*return true;*/
+		return false;
          },
          eventClick : function() {
          },
